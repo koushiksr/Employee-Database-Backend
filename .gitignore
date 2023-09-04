@@ -1,0 +1,15 @@
+# Ignore log files and other build artifacts
+*.log
+
+# Ignore directories where package managers store dependencies
+node_modules/
+
+# Ignore environment-specific files
+.env
+
+
+# Ignore editor-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
