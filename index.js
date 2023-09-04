@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get("/", (req, res) =>
+  res.setHeader("Access-Controll-Allow-Credentials",true);
   res.send({ msg: " welcome to home page of employee database" })
 );
 app.use("/employee", EmployeeRoutes);
