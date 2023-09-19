@@ -53,8 +53,8 @@ employeeDetailsSchema.pre("save", function (next) {
   next();
 });
 
-const EmployeeDetails = mongoose.model(
+const employeedetails = mongoose.model(
   "EmployeeDetails",
   employeeDetailsSchema
 );
-module.exports = EmployeeDetails;
+module.exports = employeedetails;

@@ -1,41 +1,29 @@
-const EmployeeDetails = require("../models/EmployeeSchema");
+const employeedetails = require("../models/EmployeeSchema");
 class EmployeeServices {
-  constructor() {}
+  constructor() { }
 
   createOne = async (body) => {
-    return await EmployeeDetails.create(body);
+    return await employeedetails.create(body);
   };
-  getAll = async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const pageSize = parseInt(req.query.pageSize) || 10;
 
-    const skip = (page - 1) * pageSize;
-
-    return await EmployeeDetails.find()
-      .sort({ createdDate: -1 })
-      .skip(skip)
-      .limit(pageSize)
-      // .toArray();
+  getAll = async (skip, pageSize, res) => {
+    return await employeedetails.find().sort({ createdDate: -1 }).skip(skip).limit(pageSize)
   };
+
   getAllWithoutPAgination = async () => {
-    console.log("service get all ")
-    const allData = await EmployeeDetails.find()
-    return  allData;
+    return await employeedetails.find();
   };
+
   getOne = async (email) => {
-    return await EmployeeDetails.findOne({ email: email });
+    return await employeedetails.findOne({ email: email });
   };
 
   updateOne = async (Email, body) => {
-    const query = [{ email: Email }, { $set: body }];
-    const updated = await EmployeeDetails.findOneAndUpdate(
-      { email: Email },
-      { $set: body }
-    );
-    return updated;
+    return await employeedetails.findOneAndUpdate({ email: Email }, { $set: body });
   };
+
   findByIdAndRemove = async (Gmail) => {
-    return await EmployeeDetails.findOneAndDelete({ email: Gmail });
+    return await employeedetails.findOneAndDelete({ email: Gmail });
   };
 }
 

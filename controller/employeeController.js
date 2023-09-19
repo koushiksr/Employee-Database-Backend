@@ -3,7 +3,7 @@ const EmployeeDetails = require("../models/EmployeeSchema");
 const employeeServices = new EmployeeServices();
 
 class EmployeeController {
-  constructor() {}
+  constructor() { }
 
   // Create a new employee
   async newEmployee(req, res) {
@@ -40,15 +40,18 @@ class EmployeeController {
   // Retrieve all employees
   async allEmployees(req, res) {
     try {
-    // console.log(req.query)
-      const allEmployees = await employeeServices.getAll(req,res);
-      console.log(allEmployees)
+      const page = parseInt(req.query.page) || 1;
+      const pageSize = parseInt(req.query.pageSize) || 10;
+
+      const skip = (page - 1) * pageSize;
+
+      const allEmployees = await employeeServices.getAll(skip, pageSize, res);
       res.status(200).json(allEmployees);
     } catch (error) {
       res.status(500).json({ error: "Failed to retrieve all employees." });
     }
   }
-  async allEmployeesWithoutPagination(req,res) {
+  async allEmployeesWithoutPagination(req, res) {
     console.log("emp")
     try {
       const allEmployees = await employeeServices.getAllWithoutPAgination();
@@ -79,13 +82,13 @@ class EmployeeController {
       console.log(req.body);
 
       // Use destructuring to extract fields from req.body
-      const { firstName, lastName, email, position, department, salary , joiningDate , experience } =
+      const { firstName, lastName, email, position, department, salary, joiningDate, experience } =
         req.body;
 
       // Update the employee using your employeeServices.updateOne method
       const updatedEmployee = await employeeServices.updateOne(
         req.params.email,
-        { firstName, lastName, email, position, department, salary , joiningDate , experience}
+        { firstName, lastName, email, position, department, salary, joiningDate, experience }
       );
       // Find the updated data in the database
       const newData = await EmployeeDetails.findOne({
